@@ -1,0 +1,40 @@
+{
+    "manifest_version": 3,
+    "name": "Poofff - Element Hider",
+    "version": "1.0",
+    "description": "Interactively hide elements on any webpage. Replicates Arc's Zap.",
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "assets/icons/poofff_16.png",
+            "48": "assets/icons/poofff_48.png",
+            "128": "assets/icons/poofff_128.png"
+        }
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "css": [
+                "styles.css"
+            ]
+        }
+    ],
+    "icons": {
+        "16": "assets/icons/poofff_16.png",
+        "48": "assets/icons/poofff_48.png",
+        "128": "assets/icons/poofff_128.png"
+    }
+}
