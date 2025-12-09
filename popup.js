@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             startBtn.style.background = '#2ed573';
             startBtn.dataset.active = 'true';
         } else {
-            startBtn.textContent = 'Poofff…';
+            startBtn.textContent = 'Start Poofff…';
             startBtn.style.background = '#ff4757';
             startBtn.dataset.active = 'false';
         }
@@ -122,13 +122,45 @@ document.addEventListener('DOMContentLoaded', async () => {
             const li = document.createElement('li');
             li.className = 'hidden-item';
 
-            // Truncate if too long (simple approach)
+            // Selector text
+            const selectorSpan = document.createElement('span');
+            selectorSpan.className = 'selector-text';
             const displaySel = sel.length > 30 ? sel.substring(0, 30) + '...' : sel;
-            li.textContent = displaySel;
-            li.title = sel; // Full text on hover
+            selectorSpan.textContent = displaySel;
+            selectorSpan.title = sel; // Full text on hover
 
+            // Delete button
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-item-btn';
+            deleteBtn.textContent = '✕';
+            deleteBtn.title = 'Remove this hidden element';
+            deleteBtn.addEventListener('click', async () => {
+                await deleteSelector(sel);
+            });
+
+            li.appendChild(selectorSpan);
+            li.appendChild(deleteBtn);
             hiddenList.appendChild(li);
         });
+    }
+
+    async function deleteSelector(selector) {
+        try {
+            // Send message to content script to remove this specific selector
+            await chrome.tabs.sendMessage(tab.id, {
+                action: 'REMOVE_SELECTOR',
+                selector: selector
+            });
+        } catch (e) {
+            console.log('Content script not available, updating storage directly');
+            // If content script is not available, update storage directly
+            const data = await chrome.storage.local.get([hostname]);
+            const selectors = data[hostname] || [];
+            const updated = selectors.filter(s => s !== selector);
+            await chrome.storage.local.set({ [hostname]: updated });
+        }
+        // Refresh the list
+        renderHiddenList();
     }
 
     resetBtn.addEventListener('click', async () => {

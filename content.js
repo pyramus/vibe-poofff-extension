@@ -133,6 +133,10 @@ console.log('Poofff: Script loaded');
                     this.resetAll();
                     sendResponse({ status: 'reset' });
                 }
+                else if (request.action === 'REMOVE_SELECTOR') {
+                    this.removeSelector(request.selector);
+                    sendResponse({ status: 'removed' });
+                }
                 else if (request.action === 'GET_STATUS') {
                     sendResponse({ isActive: this.isPoofffMode });
                 }
@@ -340,6 +344,13 @@ console.log('Poofff: Script loaded');
             this.saveSelectors();
             this.updateGlobalStyles();
             this.hideToast();
+        }
+
+        removeSelector(selector) {
+            this.hiddenSelectors = this.hiddenSelectors.filter(s => s !== selector);
+            this.undoStack = this.undoStack.filter(s => s !== selector);
+            this.saveSelectors();
+            this.updateGlobalStyles();
         }
 
         injectToast() {
