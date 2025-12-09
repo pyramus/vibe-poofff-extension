@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poofff</title>
+  <style>
+    body {
+      width: 280px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f8f9fa;
+      color: #2f3542;
+    }
+
+    /* Views Logic */
+    .view {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .view.show {
+      display: flex;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin: 0 0 12px 0;
+      text-align: center;
+      font-weight: 800;
+      background: linear-gradient(45deg, #ff4757, #ff6b81);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    #start-btn {
+      background: #ff4757;
+      color: white;
+      box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+    }
+
+    #start-btn:hover {
+      background: #ff6b81;
+      transform: translateY(-1px);
+    }
+
+    #start-btn:active {
+      transform: translateY(1px);
+    }
+
+    #manage-btn {
+      background: #ffffff;
+      color: #2f3542;
+      border: 1px solid #dfe4ea;
+    }
+
+    #manage-btn:hover {
+      background: #f1f2f6;
+    }
+
+    #reset-btn {
+      background: #f1f2f6;
+      color: #ff4757;
+      border: 1px solid #dfe4ea;
+    }
+
+    #reset-btn:hover {
+      background: #feebeb;
+    }
+
+    #back-btn {
+      background: transparent;
+      color: #747d8c;
+      font-size: 13px;
+      padding: 8px;
+    }
+
+    #back-btn:hover {
+      color: #2f3542;
+    }
+
+    /* List View Styles */
+    h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: #2f3542;
+    }
+
+    #hidden-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-height: 200px;
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid #f1f2f6;
+    }
+
+    .hidden-item {
+      padding: 8px 12px;
+      border-bottom: 1px solid #f1f2f6;
+      font-size: 11px;
+      color: #57606f;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: monospace;
+      word-break: break-all;
+    }
+
+    .hidden-item:last-child {
+      border-bottom: none;
+    }
+
+    .hidden-item:hover {
+      background: #f8f9fa;
+    }
+
+    .empty-state {
+      padding: 20px;
+      text-align: center;
+      color: #a4b0be;
+      font-size: 12px;
+      font-style: italic;
+    }
+
+    .footer {
+      margin-top: 8px;
+      font-size: 11px;
+      color: #a4b0be;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Poofff</h1>
+
+  <!-- MAIN VIEW -->
+  <div id="main-view" class="view show">
+    <button id="start-btn" data-active="false"></button> <!-- label in popup.js -->
+    <button id="manage-btn">And it's gone!</button>
+    <div class="footer">Press ESC to stop</div>
+    <div class="footer" style="margin-top: 4px; color: #747d8c; font-size: 9px;">
+      reload page if not working
+    </div>
+  </div>
+
+  <!-- LIST VIEW -->
+  <div id="list-view" class="view">
+    <h3>Hidden Elements</h3>
+    <ul id="hidden-list">
+      <!-- Items will be injected here -->
+    </ul>
+    <button id="reset-btn">Reset All Hidden</button>
+    <button id="back-btn">Back</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>

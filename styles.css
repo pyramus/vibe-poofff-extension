@@ -1,0 +1,71 @@
+/* Poofff Mode Highlight */
+.poofff-target {
+  outline: 4px solid #ff4757 !important;
+  outline-offset: -2px !important;
+  cursor: crosshair !important;
+  background-color: rgba(255, 71, 87, 0.1) !important;
+  transition: all 0.1s ease !important;
+  z-index: 2147483646 !important;
+  /* High z-index but below toast */
+}
+
+/* Ensure no clicks pass through to the element during Poofff mode */
+.poofff-active-body {
+  cursor: crosshair !important;
+  /* Visual indicator that mode is active */
+  box-shadow: inset 0 0 0 4px #ff4757 !important;
+}
+
+.poofff-active-body * {
+  /* We handle disabling interactions via JS capture, but this helps visual feedback */
+  user-select: none !important;
+  cursor: crosshair !important;
+  /* Force cursor on children too */
+}
+
+/* Undo Toast */
+#poofff-toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  /* Start transparent/hidden */
+  background: #2f3542;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 50px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 2147483647;
+  /* Max z-index */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: auto;
+}
+
+#poofff-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+#poofff-undo-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+#poofff-undo-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #fff;
+}
