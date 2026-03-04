@@ -243,6 +243,7 @@ console.log('Poofff: Script loaded');
                 const commonClasses = ['container', 'row', 'col', 'wrapper', 'content', 'active', 'hidden', 'visible'];
                 const uniqueClasses = Array.from(element.classList)
                     .filter(cls => !commonClasses.includes(cls) && !/^(is|has)-/.test(cls))
+                    .map(cls => CSS.escape(cls))
                     .slice(0, 2); // Limit to 2 classes
                 return uniqueClasses.length > 0 ? '.' + uniqueClasses.join('.') : '';
             };
@@ -334,7 +335,8 @@ console.log('Poofff: Script loaded');
                 styleEl.textContent = '';
                 return;
             }
-            const css = this.hiddenSelectors.join(',\n') + ' { display: none !important; }';
+            // Use :is() to prevent one invalid selector from breaking the entire rule
+            const css = ':is(' + this.hiddenSelectors.join(',\n') + ') { display: none !important; }';
             styleEl.textContent = css;
         }
 
