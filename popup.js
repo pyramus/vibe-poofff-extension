@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        selectors.forEach(sel => {
+        selectors.forEach((sel, index) => {
             const li = document.createElement('li');
             li.className = 'hidden-item';
 
@@ -126,8 +126,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             const selectorSpan = document.createElement('span');
             selectorSpan.className = 'selector-text';
             const displaySel = sel.length > 30 ? sel.substring(0, 30) + '...' : sel;
-            selectorSpan.textContent = displaySel;
+            selectorSpan.textContent = `${index + 1}. ${displaySel}`;
             selectorSpan.title = sel; // Full text on hover
+
+            // Add hover effects to highlight on page
+            li.addEventListener('mouseenter', () => {
+                chrome.tabs.sendMessage(tab.id, { action: 'HIGHLIGHT_SELECTOR', selector: sel }).catch(() => {});
+            });
+            li.addEventListener('mouseleave', () => {
+                chrome.tabs.sendMessage(tab.id, { action: 'UNHIGHLIGHT_SELECTOR' }).catch(() => {});
+            });
 
             // Delete button
             const deleteBtn = document.createElement('button');
